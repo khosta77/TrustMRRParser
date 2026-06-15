@@ -1,0 +1,23 @@
+[project]
+name = "trustmrr-scraper"
+version = "0.1.0"
+description = "Scraper for the TrustMRR verified startup revenue database"
+authors = [{ name = "khosta77" }]
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32",
+    "tqdm>=4.66",
+]
+
+[project.scripts]
+trustmrr-scrape = "trustmrr_scraper.cli:main"
+
+[tool.poetry]
+packages = [{ include = "trustmrr_scraper", from = "src" }]
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+
+[build-system]
+requires = ["poetry-core>=2.0"]
+build-backend = "poetry.core.masonry.api"
