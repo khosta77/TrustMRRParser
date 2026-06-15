@@ -3,6 +3,7 @@ services:
     build: .
     image: trustmrr-scraper
     env_file: .env
+    network_mode: host
     command: >
       --api-key ${TRUSTMRR_API_KEY}
       --proxy ${TRUSTMRR_PROXY}

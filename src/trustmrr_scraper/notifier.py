@@ -19,7 +19,7 @@ class EmailNotifier:
 
     @classmethod
     def from_env(cls, env: dict[str, str], recipient: str, enabled: bool) -> "EmailNotifier":
-        host = env.get("MAIL_SMTP_HOST", "172.17.0.1")
+        host = env.get("MAIL_SMTP_HOST", "127.0.0.1")
         return cls(
             host=host,
             port=int(env.get("MAIL_SMTP_PORT", "25")),

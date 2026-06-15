@@ -42,7 +42,7 @@ poetry run trustmrr-scrape --api-key tmrr_xxx --proxy http://... --limit 30 --no
 
 | Переменная | По умолчанию | Назначение |
 |---|---|---|
-| `MAIL_SMTP_HOST` | `172.17.0.1` | SMTP-релей (docker-gateway хоста) |
+| `MAIL_SMTP_HOST` | `127.0.0.1` | SMTP-релей хоста (нужен `network_mode: host`) |
 | `MAIL_SMTP_PORT` | `25` | порт |
 | `MAIL_FROM` | `noreply@kisscolab.ru` | отправитель |
 | `MAIL_TO` | `puwerfulpants@mail.ru` | получатель (можно `--notify-to`) |
@@ -59,8 +59,9 @@ cp .env.example .env        # заполнить TRUSTMRR_API_KEY, TRUSTMRR_PROX
 docker compose up --build
 ```
 
-Результат — в `./data/startups.json` (том примонтирован). Контейнер ходит на
-релей `172.17.0.1:25` через docker-bridge, как и исходный notification-сервис.
+Результат — в `./data/startups.json` (том примонтирован). Контейнер запускается
+с `network_mode: host`, чтобы слать почту на `127.0.0.1:25` — релей принимает
+только с loopback (docker-подсеть `172.17.0.0/16` получает `Relay access denied`).
 
 ## Лимиты API
 
