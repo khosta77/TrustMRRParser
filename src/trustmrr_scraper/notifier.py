@@ -64,11 +64,14 @@ class EmailNotifier:
             _html("Старт сбора", f"Начинаю сбор <b>{target}</b> стартапов ({mode})."),
         )
 
-    def progress(self, percent: int, done: int, target: int) -> None:
+    def progress(self, percent: int, done: int, target: int, phase: str = "список") -> None:
         self._send(
-            f"TrustMRR: {percent}% ({done}/{target})",
-            f"Прогресс сбора: {percent}% ({done}/{target}).",
-            _html("Прогресс сбора", f"Собрано <b>{done}</b> из {target} (<b>{percent}%</b>)."),
+            f"TrustMRR [{phase}]: {percent}% ({done}/{target})",
+            f"Прогресс ({phase}): {percent}% ({done}/{target}).",
+            _html(
+                "Прогресс сбора",
+                f"Фаза «{phase}»: собрано <b>{done}</b> из {target} (<b>{percent}%</b>).",
+            ),
         )
 
     def completed(self, count: int, path: str, elapsed: float) -> None:

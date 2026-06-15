@@ -37,17 +37,25 @@ def scrape(
             bar.update(1)
             percent = int(len(startups) / target * 100) if target else 0
             if percent >= next_milestone:
-                notifier.progress(next_milestone, len(startups), target)
+                notifier.progress(next_milestone, len(startups), target, phase="список")
                 next_milestone += 10
             if len(startups) >= target:
                 break
 
     if enrich:
+        enriched = 0
+        next_detail_milestone = 10
+        total_detail = len(startups)
         for item in tqdm(startups, desc="detail", unit="startup"):
             try:
                 item.update(client.get_startup(item["slug"]))
             except StartupNotFound:
-                continue
+                pass
+            enriched += 1
+            percent = int(enriched / total_detail * 100) if total_detail else 0
+            if percent >= next_detail_milestone:
+                notifier.progress(next_detail_milestone, enriched, total_detail, phase="детали")
+                next_detail_milestone += 10
 
     for item in startups:
         for field in DROP_FIELDS:
