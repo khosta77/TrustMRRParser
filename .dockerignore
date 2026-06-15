@@ -1,0 +1,8 @@
+.git
+.venv
+data
+*.pem
+.env
+__pycache__
+*.pyc
+.playwright-mcp

@@ -1,0 +1,13 @@
+services:
+  scraper:
+    build: .
+    image: trustmrr-scraper
+    env_file: .env
+    command: >
+      --api-key ${TRUSTMRR_API_KEY}
+      --proxy ${TRUSTMRR_PROXY}
+      --enrich
+      --out /data/startups.json
+    volumes:
+      - ./data:/data
+    restart: "no"
