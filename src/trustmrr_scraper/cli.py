@@ -27,6 +27,7 @@ def scrape(
 ) -> list[dict]:
     total = client.total_count(**filters)
     target = total if limit is None else min(limit, total)
+    print(f"[start] цель {target} стартапов, enrich={enrich}", flush=True)
     notifier.started(target, enrich)
 
     startups: list[dict] = []
@@ -37,6 +38,7 @@ def scrape(
             bar.update(1)
             percent = int(len(startups) / target * 100) if target else 0
             if percent >= next_milestone:
+                print(f"[progress] список {next_milestone}% ({len(startups)}/{target})", flush=True)
                 notifier.progress(next_milestone, len(startups), target, phase="список")
                 next_milestone += 10
             if len(startups) >= target:
@@ -54,6 +56,7 @@ def scrape(
             enriched += 1
             percent = int(enriched / total_detail * 100) if total_detail else 0
             if percent >= next_detail_milestone:
+                print(f"[progress] детали {next_detail_milestone}% ({enriched}/{total_detail})", flush=True)
                 notifier.progress(next_detail_milestone, enriched, total_detail, phase="детали")
                 next_detail_milestone += 10
 
